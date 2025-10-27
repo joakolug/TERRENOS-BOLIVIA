@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terrenos en Venta</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: white;
+    }
+
+    .seccion {
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 60px 20px;
+        text-align: center;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+        display: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* FONDOS DIFERENTES POR SECCIÓN con oscurecimiento */
+    #inicio::before,
+    #terrenos::before,
+    #contacto::before,
+    #detalle-terreno::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.45);
+        z-index: 0;
+    }
+
+    #inicio,
+    #terrenos,
+    #contacto,
+    #detalle-terreno {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white;
+    }
+
+    #inicio {
+        background-image: url('https://media.istockphoto.com/id/841278554/es/foto/hermoso-ma%C3%B1ana-sem%C3%A1foro-en-p%C3%BAblico-con-campo-de-c%C3%A9sped-verde-en-el-parque.jpg?s=612x612&w=0&k=20&c=IdMzpAq3IQ1oUUGFGF_HtpxjOI6RziMEV4yn44rrO7A=');
+    }
+
+    #terrenos {
+        background-image: url('https://wallpapers.com/images/hd/1080p-nature-background-pmalg20wnbt7641j.jpg');
+    }
+
+    #contacto {
+        background-image: url('https://m.media-amazon.com/images/I/71tri63TyHL._AC_UF894,1000_QL80_.jpg');
+    }
+
+    #detalle-terreno {
+        background-image: url('https://w0.peakpx.com/wallpaper/365/435/HD-wallpaper-beautiful-park-scenery-view-nature.jpg');
+    }
+
+    .seccion > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* TARJETAS DE TERRENOS */
+    .tarjeta {
+        background-color: rgba(255, 255, 255, 0.95);
+        color: #1a1a1a; /* ✅ Letras más oscuras */
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        width: 280px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .tarjeta h3 {
+        color: #0d4d4d; /* ✅ Título verde oscuro */
+        margin-bottom: 8px;
+    }
+
+    .tarjeta p {
+        color: #333; /* ✅ Texto más legible */
+        margin: 5px 0;
+    }
+
+    .tarjeta:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(0,0,0,0.6);
+    }
+
+    button {
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .btn-principal {
+        background-color: #0ea5a4;
+        color: white;
+        padding: 10px 20px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .btn-volver {
+        background-color: #64748b;
+        color: white;
+        padding: 10px 20px;
+    }
+
+    a {
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    h2, p {
+        color: #f6f9ff;
+    }
+
+    .contacto-ref {
+        font-size: 0.95em;
+        margin-top: 10px;
+        color: #222; /* ✅ Texto oscuro del contacto */
+    }
+
+    .contacto-ref a {
+        color: #0ea5a4;
+        text-decoration: none;
+    }
+</style>
+</head>
+<body>
+
+<!-- PANTALLA DE BIENVENIDA -->
+<div id="pantalla-inicio" style="position:relative; height:100vh; width:100vw; overflow:hidden;">
+    <img src="https://img.freepik.com/foto-gratis/hermoso-paisaje-cielo-despejado_23-2149721820.jpg" 
+         alt="Fondo de pantalla" 
+         style="width:100%; height:100%; object-fit:cover; filter: brightness(50%);" />
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
+                text-align:center; color:white;">
+        <h1 style="font-size:3em; margin-bottom:20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.7);">
+            🏡 Bienvenido a <span style="color:#ffffff;">Terrenos Bolivia</span>
+        </h1>
+        <p style="font-size:1.5em; margin-bottom:30px; text-shadow: 2px 2px 8px rgb(187, 0, 255);">
+            Encuentra el lugar ideal para construir tu futuro.
+        </p>
+        <button onclick="entrarPagina()" class="btn-principal" style="font-size:1.2em;">
+            Entrar
+        </button>
+    </div>
+</div>
+
+<!-- CONTENIDO PRINCIPAL -->
+<div id="contenido" style="display:none;">
+
+    <!-- NAV -->
+    <div style="background-color:#0ea5a4; color:white; padding:10px 20px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="font-weight:bold; font-size:1.5em;">TerrenosBolivia</div>
+        <div>
+            <a href="#" onclick="mostrarSeccion('inicio')" style="margin-right:20px;">Inicio</a>
+            <a href="#" onclick="mostrarSeccion('terrenos')" style="margin-right:20px;">Terrenos</a>
+            <a href="#" onclick="mostrarSeccion('contacto')" style="margin-right:20px;">Contacto</a>
+            <a href="#" onclick="volverBienvenida()">Bienvenida</a>
+        </div>
+    </div>
+
+    <!-- INICIO -->
+    <div id="inicio" class="seccion">
+        <h2>Bienvenido a nuestra página de terrenos</h2>
+        <p>En Terrenos Bolivia te ayudamos a encontrar el lugar ideal para tu hogar o inversión.</p>
+         <p>🌿Bienvenidos a Terrenos Bolivia 🏡<br>
+
+En Terrenos Bolivia creemos que cada persona merece la oportunidad de cumplir el sueño de tener su propio espacio, un lugar donde construir su hogar, invertir en su futuro o hacer realidad un proyecto personal.<br>
+Somos una empresa comprometida con el desarrollo urbano y rural del país, ofreciendo terrenos accesibles, seguros y con documentación garantizada en distintas regiones de Bolivia.<br>
+
+Nuestra misión es conectar a compradores con oportunidades reales, brindando asesoramiento confiable, acompañamiento constante y un servicio transparente desde el primer contacto hasta la entrega final del terreno. En Terrenos Bolivia trabajamos con honestidad, compromiso y responsabilidad, valores que nos identifican y nos impulsan a seguir creciendo junto a nuestros clientes.
+
+Contamos con una amplia variedad de lotes y terrenos ubicados en zonas estratégicas<br>
+ —urbanas, periurbanas y rurales<br>
+ — se adaptan a todo tipo de necesidades y presupuestos. <br>Ya sea que busques un espacio para tu familia, un terreno para emprender un negocio, o una inversión para el futuro, aquí encontrarás las mejores opciones del mercado.
+
+Además, te ofrecemos toda la información necesaria sobre los terrenos disponibles: ubicación exacta, medidas, precios, servicios básicos y posibilidades de financiamiento. Nuestro objetivo es que tomes decisiones con total confianza y seguridad.
+
+En Terrenos Bolivia, no solo vendemos terrenos: abrimos puertas a nuevas oportunidades.
+Porque sabemos que detrás de cada terreno hay un sueño, una meta y una historia que está por comenzar.<br>
+
+✨ Terrenos Bolivia: tu terreno ideal te espera. 🌄</p>
+    </div>
+
+    <!-- TERRENOS -->
+    <div id="terrenos" class="seccion">
+        <h2>Lista de Terrenos Disponibles</h2>
+        <div id="lista-terrenos" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin-top:30px;"></div>
+    </div>
+
+    <!-- DETALLE DE TERRENO -->
+    <div id="detalle-terreno" class="seccion" style="max-width:800px; margin:0 auto;"></div>
+
+    <!-- CONTACTO -->
+    <div id="contacto" class="seccion">
+        <h2>Contáctanos</h2>
+        <img src="https://carnavalandia.com/noticias/wp-content/uploads/2016/06/logos-contacto.png" 
+             alt="Contacto" 
+             style="width:80px; height:auto; border-radius:10px; margin-bottom:20px;">
+             <p>En Terrenos Bolivia queremos escucharte. 🤝
+Sabemos que elegir un terreno es una decisión importante, por eso ponemos a tu disposición nuestro equipo de atención personalizada para resolver todas tus dudas, brindarte información detallada y acompañarte en cada paso del proceso.<br>
+
+Puedes comunicarte con nosotros para: <br>
+
+-Solicitar información sobre terrenos disponibles 🏡<br>
+
+-Recibir asesoramiento sobre documentación y financiamiento 💼<br>
+
+-Coordinar una visita o recorrido al terreno que te interesa 🚗<br>
+
+-Obtener atención personalizada para tu compra o inversión 🌿<br>
+
+Nuestro compromiso es ofrecerte una atención rápida, clara y confiable, porque tu tranquilidad y satisfacción son nuestra prioridad.</p>
+        <p>📞 Teléfono: +591 72522459-64049714</p>
+        <p>💬 WhatsApp: <a href="https://w.app/2oakfl" target="_blank">Enviar mensaje</a></p>
+        <p>✉️ Email: terrenos@bolivia.com</p>
+    </div>
+
+</div>
+
+<script>
+const terrenos = [
+    {
+        titulo:"Terreno en el centro",
+        zona:"Centro",
+        area:"711 m²",
+        precio:"$45,000",
+        descripcion:"Terreno ideal para construir vivienda o local comercial.",
+        imagen:"https://cdn.21online.lat/bolivia/cache/awsTest1/rc/KJbPf0mU/uploads/37/propiedades/79996/6866f68ebf14e.jpg",
+        ubicacion:"https://goo.gl/maps/abcd1234",
+        contacto:{
+            nombre:"Juan Pérez",
+            telefono:"+591 70012345",
+            whatsapp:"https://wa.me/59170012345"
+        }
+    },
+    {
+        titulo:"Terreno en zona norte",
+        zona:"Zona Norte",
+        area:"800 m²",
+        precio:"$65,000",
+        descripcion:"Excelente ubicación, cerca de avenidas principales y colegios.",
+        imagen:"https://cdn.yumblin.com/images/classifieds/medium/terreno-en-venta-zona-norte-en-complejo-urbanistico-portales-del-norte-950135-440832916-rp.webp",
+        ubicacion:"https://goo.gl/maps/efgh5678",
+        contacto:{
+            nombre:"María López",
+            telefono:"+591 72567890",
+            whatsapp:"https://wa.me/59172567890"
+        }
+    },
+    {
+        titulo:"Terreno en zona sur",
+        zona:"Zona Sur",
+        area:"1000 m²",
+        precio:"$75,000",
+        descripcion:"Amplio terreno con hermosa vista panorámica.",
+        imagen:"https://www.bienesonline.com/bolivia/photos/amplio-terreno-en-venta-bajo-llojeta-TEV71401705781019-41.jpg",
+        ubicacion:"https://goo.gl/maps/ijkl9012",
+        contacto:{
+            nombre:"Carlos Fernández",
+            telefono:"+591 71199887",
+            whatsapp:"https://wa.me/59171199887"
+        }
+    }
+];
+
+function entrarPagina() {
+    document.getElementById("pantalla-inicio").style.display = "none";
+    document.getElementById("contenido").style.display = "block";
+    mostrarTerrenos();
+    mostrarSeccion("inicio");
+}
+
+function mostrarSeccion(id) {
+    const secciones = document.querySelectorAll(".seccion");
+    secciones.forEach(sec => sec.style.display = "none");
+    const seccion = document.getElementById(id);
+    if (seccion) seccion.style.display = "block";
+}
+
+function volverBienvenida() {
+    document.getElementById("contenido").style.display = "none";
+    document.getElementById("pantalla-inicio").style.display = "block";
+}
+
+function mostrarTerrenos() {
+    const lista = document.getElementById("lista-terrenos");
+    lista.innerHTML = "";
+    terrenos.forEach((t, i) => {
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "tarjeta";
+        tarjeta.innerHTML = `
+            <img src="${t.imagen}" alt="${t.titulo}" style="width:100%; height:180px; object-fit:cover;">
+            <div style="padding:10px;">
+                <h3>${t.titulo}</h3>
+                <p><strong>Zona:</strong> ${t.zona}</p>
+                <p><strong>Área:</strong> ${t.area}</p>
+                <p><strong>Precio:</strong> ${t.precio}</p>
+                <div class="contacto-ref">
+                    👤 <strong>${t.contacto.nombre}</strong><br>
+                    📞 <a href="tel:${t.contacto.telefono}">${t.contacto.telefono}</a><br>
+                    💬 <a href="${t.contacto.whatsapp}" target="_blank">WhatsApp</a>
+                </div>
+                <button onclick="verDetalle(${i})" class="btn-principal" style="width:100%; margin-top:10px;">Ver más</button>
+            </div>
+        `;
+        lista.appendChild(tarjeta);
+    });
+}
+
+function verDetalle(index) {
+    const t = terrenos[index];
+    const detalle = document.getElementById("detalle-terreno");
+    detalle.innerHTML = `
+        <h2>${t.titulo}</h2>
+        <img src="${t.imagen}" alt="${t.titulo}" width="100%" style="border-radius:10px; margin-bottom:20px; max-width:600px;"/>
+        <p><strong>Zona:</strong> ${t.zona}</p>
+        <p><strong>Área:</strong> ${t.area}</p>
+        <p><strong>Precio:</strong> ${t.precio}</p>
+        <p>${t.descripcion}</p>
+        <a href="${t.ubicacion}" target="_blank" style="color:#fff;">📍 Ver en Google Maps</a><br><br>
+
+        <div style="background:rgba(255,255,255,0.9); color:#333; padding:15px; border-radius:10px; display:inline-block; text-align:left;">
+            <h3>📞 Contacto del Propietario</h3>
+            <p><strong>Nombre:</strong> ${t.contacto.nombre}</p>
+            <p><strong>Teléfono:</strong> <a href="tel:${t.contacto.telefono}">${t.contacto.telefono}</a></p>
+            <p><strong>WhatsApp:</strong> <a href="${t.contacto.whatsapp}" target="_blank">${t.contacto.whatsapp}</a></p>
+        </div><br><br>
+
+        <button onclick="mostrarSeccion('terrenos')" class="btn-volver">⬅ Volver</button>
+    `;
+    mostrarSeccion("detalle-terreno");
+}
+</script>
+
+</body>
+</html>
